@@ -1,60 +1,20 @@
-# with open('./pubmed-coronaviru-set.txt/pubmed-coronaviru-set.txt', 'r', encoding='utf8') as f:
-#     lt = []
-#     for line in f.readlines():
-#         if line.startswith('DP'):
-#            lt.append(line)
-# print(lt)
-#
-# May = 0
-# for date in lt:
-#     if 'May' in date:
-#         May+=1
-# print(May)
-
-# import re
-# from collections import Counter
-#
-# with open('./pubmed-coronaviru-set.txt/pubmed-coronaviru-set.txt', 'r', encoding='utf8') as f:
-#     lt = []
-#     for line in f.readlines():
-#         result = re.findall('\s[A-D]+[a-z]*[.]$',line)                              #'\s+?[a-z]+[.]$'
-#         if len(result) >0:
-#             # result.strip()
-#             lt.extend(result)
-# lt2 = Counter(lt).most_common()
-# print(lt2)
-
 import re
 from collections import Counter
-#
-# with open('./pubmed-coronaviru-set.txt/pubmed-coronaviru-set.txt', 'r', encoding='utf8') as f:
-#     line = ''
-#
-#
-#     # # for line in f.readlines():
-#     while True:
-#         print(f.readline())
-#
-#     # lt3 = []
-    # lines = ''
-    # for line in f.readlines():
-    #     if line.startswith('AD'):
-    #         print(line)
-    #         a='aa'
-    #         while line.endswith('.') == False:
-    #             line = f.readline()
-    #             print(line)
-    #         result = re.findall('\s[A-za-z]*[.]$',line)
-    #         lt3.append(result)
-    #         print(result)
 
+with open('./pubmed-coronaviru-set.txt/pubmed-coronaviru-set.txt', 'r', encoding='utf8') as f:
+    lt = []
+    for line in f.readlines():
+        if line.startswith('DP'):
+           lt.append(line)
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+month_list = [[month,0] for month in months]
+for month in month_list:
+    for date in lt:
+        if month[0] in date:
+            month[1] += 1
 
-# # print(lt3)AD  - School of Medicine, The Maldives National University, Male', Maldives.
-# a = "AD  - School of Medicine, The Maldives National University, Male', Maldives."
-# # print(a)
-# # print(re.findall('\s[A-za-z]*[.]$', a))
-# # print(len(re.findall('\s[A-za-z]*[.]$', a)))
-# print(a.endswith('.'))
+month_list = sorted(month_list, key=lambda x:x[1], reverse=True)
+print(month_list)
 
 
 with open('./pubmed-coronaviru-set.txt/pubmed-coronaviru-set.txt', 'r', encoding='utf8') as f:
@@ -81,21 +41,19 @@ with open('./pubmed-coronaviru-set.txt/pubmed-coronaviru-set.txt', 'r', encoding
         for i in ads:
             if i.startswith('AD'):
                 adDict[count2] = i
-        try:
-            adDict[count2]
-        except:
-            adDict[count2] = 'None'
+        # try:
+        #     adDict[count2]
+        # except:
+        #     adDict[count2] = 'None'
 
-    finalLines = list(adDict.values())
     print(len(adDict))
-    print(len(finalLines))
-    print(finalLines)
+    finalLines = list(adDict.values())
     for line in finalLines:
             result = re.findall('\s[A-Z]+[a-zA-Z]+[.]$',line)                              #'\s+?[a-z]+[.]$'
             if len(result) >0:
-            # result.strip()
                 lastLt.extend(result)
-# print(lastLt)
+    lastLt = [result.replace(' ','').replace('.','') for result in lastLt]
+
 print(len(lastLt))
 lt2 = Counter(lastLt).most_common()
 print(lt2)
